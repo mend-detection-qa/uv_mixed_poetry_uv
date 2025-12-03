@@ -1,0 +1,129 @@
+# Mixed Poetry and UV Configuration
+# This project is in transition from Poetry to UV
+
+[project]
+# PEP 621 standard metadata (UV-compatible)
+name = "mixed-poetry-uv"
+version = "1.0.0"
+description = "Combined integration test: Mixed Poetry and UV manifest files"
+requires-python = ">=3.10"
+authors = [
+    {name = "Test Author", email = "test@example.com"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+
+# PEP 621 dependencies (UV format)
+dependencies = [
+    "fastapi>=0.109.0",
+    "pydantic>=2.0.0",
+    "requests>=2.31.0,<3.0.0",
+    "click>=8.1.0",
+    "sqlalchemy>=2.0.0",
+]
+
+[project.optional-dependencies]
+# UV-style optional dependencies
+postgres = [
+    "psycopg2-binary>=2.9.0",
+    "asyncpg>=0.29.0",
+]
+redis = [
+    "redis>=5.0.0",
+]
+
+# ==========================================
+# POETRY CONFIGURATION (LEGACY)
+# Being phased out in favor of UV
+# ==========================================
+
+[tool.poetry]
+# Poetry metadata (some overlap with [project])
+name = "mixed-poetry-uv"
+version = "1.0.0"
+description = "Combined integration test: Mixed Poetry and UV manifest files"
+authors = ["Test Author <test@example.com>"]
+readme = "README.md"
+license = "MIT"
+
+[tool.poetry.dependencies]
+# Poetry-style dependencies (caret notation)
+python = "^3.10"
+fastapi = "^0.109.0"
+pydantic = "^2.0.0"
+requests = "^2.31.0"  # Note: Different syntax than UV
+click = "^8.1.0"
+sqlalchemy = "^2.0.0"
+# Additional Poetry-only dependency
+python-dateutil = "^2.8.0"
+
+[tool.poetry.group.dev.dependencies]
+# Poetry dev dependencies
+pytest = "^8.0.0"
+pytest-cov = "^4.1.0"
+black = "^24.0.0"
+ruff = "^0.3.0"
+
+[tool.poetry.extras]
+# Poetry-style extras
+postgres = ["psycopg2-binary", "asyncpg"]
+redis = ["redis"]
+
+# ==========================================
+# UV CONFIGURATION (CURRENT/TARGET)
+# This is the preferred configuration
+# ==========================================
+
+[dependency-groups]
+# UV dependency groups (PEP 735)
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "mypy>=1.8.0",
+    "ruff>=0.3.0",
+]
+
+[tool.uv]
+# UV-specific configuration
+dev-dependencies = [
+    # Legacy UV dev dependencies format
+    "httpx>=0.27.0",
+]
+
+[tool.uv.sources]
+# UV-specific package sources (if any)
+# Currently using default PyPI
+
+# ==========================================
+# BUILD SYSTEM
+# ==========================================
+
+[build-system]
+# Using hatchling (UV-compatible)
+# Note: Poetry projects typically use "poetry-core"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# Poetry would use:
+# requires = ["poetry-core>=1.0.0"]
+# build-backend = "poetry.core.masonry.api"
+
+# ==========================================
+# TOOL CONFIGURATIONS
+# ==========================================
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.black]
+line-length = 100
+target-version = ['py310']
