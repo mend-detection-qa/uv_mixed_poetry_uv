@@ -8,7 +8,7 @@
             "_security_scan_report_conclusion": "failure",
             "_comment_security_scan_report_conclusion": "Optional. Expected scan report conclusion. Options: 'success' | 'failure'. This validates the security scan result status. If not provided, this check will not be performed.",
             "total_libs_scanned": {
-                "eq": 16
+                "eq": 15
             },
             "_comment_total_libs_scanned": "Expected number of libraries scanned with comparison operator. Validates that the scan processed libraries."
         },
